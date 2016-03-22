@@ -24,19 +24,11 @@
 
     function countBs(string) {
         // code
-		var count = 0;
-		
-		for (var i = 0; i < string.length; i++) {
-			if (string.charAt(i) == "B"){
-				count++;
-			}
-		}
-		
-		return count;
+		return countChar(string, "B");
     }
 
 
-  console.log(countBs("BBC")); // → 2
+  console.log(countChar("BBC","B")); // → 2
   console.log(countChar("kakkerlak", "k")); // → 4
     
   </script>
