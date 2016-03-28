@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="libs.js"></script>
+ 
+</head>
+<body>
+
+  <script>
+  var arrays = [[1, 2, 3], [4, 5], [6]];
+
+  function flatter(arrays) {
+  	var newArr = arrays.reduce(function(tempResultArray, currentValue){
+	  return tempResultArray.concat(currentValue);
+	});
+	return newArr;
+  };
+
+  console.log(flatter(arrays)) // → [1, 2, 3, 4, 5, 6]
+  </script>
+
+   <script src="test.js"></script>
+</body>
+</html>
