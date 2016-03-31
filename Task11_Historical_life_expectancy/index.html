@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="libs.js"></script>
+  <script src="ancestry.js"></script>
+</head>
+<body>
+
+  <script>	
+	var ancestry = JSON.parse(ANCESTRY_FILE);
+	function average(array) {
+	  function plus(a, b) { return a + b; }
+	  return array.reduce(plus) / array.length;
+	};
+
+	function getCenturiesList() {  // Get unique centuries list for current set
+		var centuriesList = [];
+		var allCent = ancestry.map(function(person) {
+		  return Math.ceil(person.died / 100)
+		});
+		
+		for (var i = 0; i < allCent.length; i++) {
+			if (centuriesList.indexOf(allCent[i]) == -1) {
+			  centuriesList.push(allCent[i]);
+			}
+		}
+		return centuriesList.sort();
+	}
+	
+	function groupBy(centuriesList) {  // Group by centuries
+	  var tmpGroup = {};
+	  
+	  for (var i = 0; i<centuriesList.length; i++) {
+	    var currCent = centuriesList[i];
+	    var forCurrCentList = ancestry.filter(function(person) {
+		  return Math.ceil(person.died / 100) === currCent;
+		});
+		tmpGroup[currCent] = forCurrCentList;
+	  }
+	  return tmpGroup;
+	}
+	
+	
+	function getStatistic() {  // Get statistic
+	  var centuriesList = getCenturiesList();
+	  var groupedObj = groupBy(centuriesList);
+	  var statisticArray = [];
+	  
+	  for (var arr in groupedObj) {
+		var ageList = groupedObj[arr].map(function(person) {
+		  return person.died-person.born;
+		});
+		statisticArray.push(arr+': '+average(ageList));
+	  }
+	  
+	  return statisticArray;
+	};
+
+	console.log(getStatistic());
+	
+
+// → 16: 43.5
+//   17: 51.2
+//   18: 52.8
+//   19: 54.8
+//   20: 84.7
+//   21: 94
+
+
+  </script>
+
+   <script src="test.js"></script
+</body>
+</html>
