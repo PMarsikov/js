@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+ 
+</head>
+<body>
+
+  <script>
+
+  
+  var text = "'I'm the cook,' he said, 'it's my job.'";
+  regExp = /(^)(')|(\W)(')|(')(\W)/g
+  
+  // Change this call.  
+  console.log(text.replace(regExp, '$1$3"$6'));
+
+// → "I'm the cook," he said, "it's my job."
+
+  </script>
+</body>
+</html>
