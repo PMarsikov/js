@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="mountains.js"></script>
+  <script src="chapter/13_dom.js"></script>
+</head>
+<body>
+
+
+<body style="min-height: 200px">
+
+  <img src="cat.png" id="cat" style="position: absolute; margin:100px 0 0 400px;">
+  <img src="hat.png" id="hat" style="position: absolute; margin:100px 0 0 400px;">
+
+  <script>
+
+    var cat = document.getElementById ("cat");
+    var hat = document.getElementById ("hat");
+	
+    var angle = 0, lastTime = null;
+    function animate(time) {
+      if (lastTime != null)
+        angle += (time - lastTime) * 0.001;
+      lastTime = time;
+      cat.style.top = (Math.sin(angle) * 80) + "px";
+      cat.style.left = (Math.cos(angle) * 300) + "px";
+	  console.log("sin: " + Math.sin(angle) + " cos: "+ Math.cos(angle));
+      
+	  hat.style.top = (Math.sin(angle) * 80 * -1) + "px";
+      hat.style.left = (Math.cos(angle) * 300 * -1) + "px";
+	  
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+  </script>
+
+</body>
+</html>
