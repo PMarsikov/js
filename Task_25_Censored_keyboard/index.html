@@ -1,0 +1,11 @@
+<!doctype html>
+
+<input type="text"> <p>Do not use X,Q,W</p>
+<script>
+  addEventListener("keypress", function(event) {
+    //"keydown" if (event.keyCode == 81 | event.keyCode == 87 | event.keyCode == 88)
+	regExp = /[xqw]/i;
+	if (regExp.test(String.fromCharCode(event.charCode))) 
+	  event.preventDefault();
+  });
+</script>
