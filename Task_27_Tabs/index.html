@@ -1,0 +1,66 @@
+<!doctype html>
+<style type="text/css">
+   .btn {
+      height:30px;
+	  width:100px;
+   }
+   .activeBtn {
+	  height:30px;
+	  width:100px;
+	  color: red;
+	  font-weight:bold;
+	  text-decoration:underline;
+   }
+</style>
+<div id="wrapper">
+  <div data-tabname="one">Tab one</div>
+  <div data-tabname="two">Tab two</div>
+  <div data-tabname="three">Tab three</div>
+</div>
+<script>
+  function asTabs(node) {
+    var tabContentList = [];
+	var tabButtonList = [];
+	var tabs = [];
+	var tabContainer = document.createElement("div");
+	
+	
+	for (var i = 0; i < node.childNodes.length; i++) {	  
+	  if (node.childNodes[i].nodeType == 1) {
+	    tabContentList.push(node.childNodes[i]);
+	  }
+    }
+	
+	for (var i = 0; i < tabContentList.length; i++) {
+	  var tab = {};
+      var button = document.createElement("button");
+	  var label = document.createTextNode(tabContentList[i].dataset.tabname);
+	  button.appendChild(label);
+	  button.classList.add('btn');
+	  tabContainer.appendChild(button);
+	  tab.button = button;
+	  tabButtonList.push(button);
+	  tab.content = tabContentList[i];
+	  tabs.push(tab);
+	}
+	node.insertBefore(tabContainer, node.childNodes[0]);
+	
+	tabs.forEach(function(tab){
+	  tab.button.addEventListener('click', function(event) {
+		hideAllContent();
+		tab.content.style.display = 'block';
+		tab.button.classList.add('activeBtn');
+	  });
+	});
+	
+	
+   	hideAllContent(); 
+	function hideAllContent() {
+	  for (var i = 0; i < tabContentList.length; i++) {
+	    tabContentList[i].style.display = 'none'; 
+		tabButtonList[i].classList.remove('activeBtn');
+	  }    
+	}
+  }
+  asTabs(document.querySelector("#wrapper"));
+</script>
