@@ -1,0 +1,108 @@
+<!doctype html>
+<script src="15_game.js"></script>
+<script src="game_levels.js"></script>
+<script src="16_canvas.js"></script>
+
+	<canvas id = "1" width="150" height="60"></canvas><br>
+	<canvas id = "2" ></canvas><br><br>
+	<canvas id = "3" ></canvas><br><br>
+	<canvas id = "4" width="500" height="300"></canvas><br><br>
+	<canvas id = "5"></canvas>
+<script>
+  function drawTrapezoid(x0, y0, x1, y1, x2, y2, x3, y3) {
+	var cx = document.getElementById("1").getContext("2d"); 
+    cx.beginPath();
+	cx.moveTo(x0, y0);
+	cx.lineTo(x1, y1);
+	cx.lineTo(x2, y2);
+	cx.lineTo(x3, y3);
+	cx.lineTo(x0, y0);
+	cx.stroke();
+  };
+  
+  function drawRedDiamond(x0, y0, x1, y1, x2, y2, x3, y3) {
+	var cx = document.getElementById("2").getContext("2d"); 
+	cx.translate(50,50);
+	cx.rotate(0.25*Math.PI);    
+	
+    cx.beginPath();
+	cx.moveTo(x0, y0);
+	cx.lineTo(x1, y1);
+	cx.lineTo(x2, y2);
+	cx.lineTo(x3, y3);
+	cx.lineTo(x0, y0);
+	cx.fillStyle = "red";
+	cx.fill();
+  };
+  
+  function drawZigzagging(count, x0, y0, x1, y1, x2, y2) {
+	var cx = document.getElementById("3").getContext("2d"); 
+	cx.moveTo(x0, y0);
+	for (var i = 0; i<count; i++) {
+	  if ( i % 2 == 0 ) {
+	    cx.lineTo(x1, y1);
+		y1 +=20;
+	  } else {
+	    cx.lineTo(x2, y2);
+		y2 +=20;
+	  }
+	}
+	cx.stroke();
+  };
+  
+  function drawSpiral(radius, step, number) {
+    var cx = document.getElementById("4").getContext("2d"); 
+	cx.translate(150,150);
+	for (var i = 0; i < number; i++) {
+	  if ( i % 2 == 0 ) {
+	    radius += step;
+	    cx.arc(0, 0, radius, 600, 2 * Math.PI); 
+	  } else {
+	    radius += step;
+	    cx.arc( (step * -1), 0, radius, 0, 1 * Math.PI);  
+	  }
+	}	
+	cx.stroke();
+  };
+  
+  function drawStar (color) {
+    var cx = document.getElementById("5").getContext("2d"); 
+	cx.beginPath();
+	cx.moveTo(80, 10);   //x0,y0
+	
+	// control=(60,10) goal=(90,90)
+	
+	cx.quadraticCurveTo(95, 90, 140, 20);	 
+	cx.lineTo(140, 20); 					  
+	
+	cx.quadraticCurveTo(100, 80, 160, 80);  
+	cx.lineTo(160, 80);  					
+	
+	cx.quadraticCurveTo(90, 90, 140, 140);  
+	cx.lineTo(140, 140);  
+	
+	cx.quadraticCurveTo(90, 90, 80, 150);
+	cx.lineTo(80, 150);  
+	
+	cx.quadraticCurveTo(80, 90, 20, 140);
+	cx.lineTo(20, 140);  
+	
+	cx.quadraticCurveTo(90, 85, 0, 80);  
+	cx.lineTo(0, 80);  
+	
+	cx.quadraticCurveTo(90, 85, 20, 20); 
+	cx.lineTo(20, 20);  
+	
+	cx.quadraticCurveTo(90, 90, 80, 10); 
+	cx.lineTo(80, 10);  
+	
+	cx.fillStyle = color;
+	cx.fill();		
+  };
+  drawTrapezoid(60,20,100,20,130,60,30,60);
+  drawRedDiamond(30,20,70,20,70,60,30,60);
+  drawZigzagging(15, 30,10, 120,20, 30,30);
+  drawSpiral(0,5,23);
+  drawStar("orange");
+</script>
+
