@@ -1,0 +1,66 @@
+<!doctype html>
+<script src="15_game.js"></script>
+<script src="game_levels.js"></script>
+<script src="16_canvas.js"></script>
+
+<canvas width="600" height="300"></canvas>
+<script>
+
+
+var results2 = [
+  {name: "Satisfied", count: 500, color: "lightblue"},
+  {name: "Neutral", count: 663, color: "lightgreen"},
+  {name: "Unsatisfied", count: 300, color: "pink"},
+  {name: "No comment", count: 1011, color: "silver"}
+];
+
+var results3 = [
+  {name: "Satisfied", count: 250, color: "lightblue"},
+  {name: "Neutral", count: 250, color: "lightgreen"},
+  {name: "Unsatisfied", count: 250, color: "pink"},
+  {name: "No comment", count: 250, color: "silver"}
+];
+
+  //results = results2;
+  //results = results3;
+
+  var cx = document.querySelector("canvas").getContext("2d");
+  var total = results.reduce(function(sum, choice) {
+    return sum + choice.count;
+  }, 0);
+
+  var currentAngle = -0.5 * Math.PI;
+  var centerX = 300, centerY = 150;
+  // Add code to draw the slice labels in this loop.
+  results.forEach(function(result) {
+  
+    var sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    cx.arc(centerX, centerY, 100,
+           currentAngle, currentAngle + sliceAngle);
+    currentAngle += sliceAngle;
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    cx.fill();
+	
+	//label
+	var middleAngle = currentAngle + (-0.5) * sliceAngle;
+	var textX = Math.cos(middleAngle) * 120 + centerX;
+	var textY = Math.sin(middleAngle) * 120 + centerY;
+	
+	cx.moveTo(0,0);
+	cx.font = "14px Georgia";
+    cx.fillStyle = "green";
+    cx.fillText(result.name, textX, textY);
+	cx.textBaseline="middle";
+	cx.textBaseline="top";
+	
+	if (middleAngle < 0) {
+	  cx.textAlign="left";  
+	} else {
+	  cx.textAlign="right";
+	}
+	
+  });
+</script>
+
