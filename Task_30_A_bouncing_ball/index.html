@@ -1,0 +1,43 @@
+<!doctype html><!-- 
+<script src="15_game.js"></script>
+<script src="game_levels.js"></script>
+<script src="16_canvas.js"></script>
+ -->
+<canvas width="500" height="300"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  
+  var centerX = 30, centerY = 30,
+      radius = 30,
+      boardX = 500, boardY = 300,
+      ballDx = 3, ballDy = 3, 
+      lastTime = null;
+  
+  function frame(time) {
+    if (lastTime != null)
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function updateAnimation(step) {
+	cx.clearRect(0,0,boardX, boardY);
+	centerX += ballDx;
+	centerY += ballDy;
+	
+	cx.beginPath();
+	cx.arc(centerX,centerY,radius,0,Math.PI*2,false);
+	cx.stroke();
+	cx.fillStyle = "yellow";
+	cx.fill();
+
+	if (centerY > boardY - radius || centerY - radius < 1) {
+	  ballDy = -1*ballDy;
+	}
+	if (centerX > boardX - radius || centerX < radius ) {
+	  ballDx = -1*ballDx;
+	}
+  }
+</script>
+
