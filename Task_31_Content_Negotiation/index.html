@@ -1,0 +1,23 @@
+﻿<!doctype html>
+
+<script>  
+  var headersList = ['text/plain','text/html','application/json','application/rainbows+unicorns'];
+  
+  function request (accept) {
+    var req = new XMLHttpRequest();
+    req.open("GET", "http://eloquentjavascript.net/author", true);
+    req.setRequestHeader('Accept', accept);
+  
+    req.addEventListener("load", function() {
+      console.log(req.responseText);
+    });
+  
+    req.send(null);
+  }
+  
+  for (var i = 0; i < headersList.length; i++) {
+    request (headersList[i]);
+  }
+  
+</script>
+
