@@ -14,7 +14,7 @@ function all(promises) {
 		    if (count === len) {succeed(resArray);}
 		  },
 		  function(value){
-  		    fail(new Error("boom"));
+  		    fail(value);
 		  });
 	  });
 	  if (count === len) { succeed(resArray); }
