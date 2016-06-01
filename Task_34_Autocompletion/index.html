@@ -1,0 +1,61 @@
+<!doctype html>
+<script src="promise.js"></script>
+
+<input type="text" id="field">
+<div id="suggestions" style="cursor: pointer"></div>
+
+<script>
+  // Builds up an array with global variable names, like
+  // 'alert', 'document', and 'scrollTo'
+  var terms = [];
+  for (var name in window)
+    terms.push(name); 
+
+  var field = document.getElementById("field");
+  var sugg = document.getElementById("suggestions");
+ 
+  field.addEventListener("input", function(){
+	sugg.innerText = "";
+	
+	var termsFiltered = terms.filter(function(item){
+	  return item.indexOf(field.value) == 0 && field.value !="";
+	});
+	
+	for(var i = 0; i < termsFiltered.length; i++) {
+	  if (termsFiltered[i].indexOf(field.value) == 0) {
+		var suggSpan = document.createElement('span')
+		suggSpan.innerHTML = termsFiltered[i]+"<br>"; 
+		suggSpan.addEventListener('click', function(){
+	      field.value = this.innerText;
+	      sugg.innerText = "";
+	    });
+		sugg.appendChild(suggSpan);
+	  }
+	}
+
+  
+  });
+
+
+
+</script>
+
+<!--
+
+indexOf 
+textContent 
+You could either add a "click" event handler to every suggestion element or add 
+a single one to the outer <div> that holds them and look at the target property o
+f the event to find out which suggestion was clicked.
+
+
+<input type="text"> length: <span id="length">0</span>
+<script>
+  var text = document.querySelector("input");
+  var output = document.querySelector("#length");
+  text.addEventListener("input", function() {
+    output.textContent = text.value.length;
+  });
+</script>
+
+--->
