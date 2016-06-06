@@ -1,0 +1,114 @@
+<!doctype html>
+<script src="promise.js"></script>
+
+<div id="grid"></div>
+<button id="next">Next generation</button>
+<button id="run">Auto run</button>
+<script>  
+  var cX = 10;
+  var cY = 10;
+  var map = [];
+  
+  createMap ();
+  
+  var runBtn = document.getElementById("run");
+  runBtn.addEventListener("click", function (){
+    setInterval('nextGen()', 400);
+  });
+  
+  var nextBtn = document.getElementById("next");
+  nextBtn.addEventListener("click", function (){
+    nextGen();
+  });
+   
+  var cbTag = document.getElementsByTagName("input");
+  for (var i = 0; i < cbTag.length; i++) {
+    cbTag[i].addEventListener("change", function (){
+	  var atr = this.id.split(',');
+	  atrI = atr[0];
+	  atrJ = atr[1];
+	  if (this.checked) {
+	    map[atrI][atrJ] = "#";
+	  } else {
+	    map[atrI][atrJ] = ".";
+	  }
+    });  
+  }
+  
+  function createMap () {
+    var table = document.createElement('table');
+    for (var i = 0; i < cX; i++) {
+	  var tr = document.createElement('tr');
+	  map[i] = [];
+      for (var j = 0; j < cY; j++) {
+		var td = document.createElement('td');
+		var cb = document.createElement('input');
+		cb.type = "checkbox";
+		cb.checked = isChecked();
+		cb.id = i+","+j;
+		td.appendChild(cb);
+		tr.appendChild(td);
+		if (cb.checked) {
+		  map[i][j] = "#"; 
+		} else {
+			map[i][j] = ".";
+		}
+	  }
+		table.appendChild(tr);
+    }
+    document.body.appendChild(table);
+  };
+  
+  function isChecked() {
+    if (Math.random() < 0.5) {
+	  return true;
+	} else {
+	  return false;
+	}
+  };
+  
+  function nextGen() {
+    for (var i = 0; i < cX; i++) {
+	  for (var j = 0; j <cY; j++) {
+		var countNei = countNeighbors(i,j);
+		var currCheckbox = document.getElementById(i+","+j)
+		if (currCheckbox.checked){
+		  if (countNei < 2 || countNei > 3) map[i][j] = ".";
+		} else {
+		  if (countNei == 3) map[i][j] = "#";
+		}
+	  }
+	}
+	
+	for (var i = 0; i < cX; i++) {
+	  for (var j = 0; j <cY; j++) {
+	    if (map[i][j] == ".") {
+		  document.getElementById(i+","+j).checked = false;
+		}
+		else {document.getElementById(i+","+j).checked = true;}
+	  }
+	}
+  };
+  
+  function countNeighbors(i,j) {
+    var countNei = 0;
+	var cd = document.getElementById((i-1)+","+j);
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById((i-1)+","+(j-1));
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById(i+","+(j-1));
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById((i+1)+","+(j-1));
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById((i+1)+","+j);
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById((i+1)+","+(j+1));
+	if (cd != null && cd.checked) countNei++;
+
+	cd = document.getElementById(i+","+(j+1));
+	if (cd != null && cd.checked) countNei++;
+	cd = document.getElementById((i-1)+","+(j+1));
+	if (cd != null && cd.checked) countNei++;
+	return countNei;
+  }
+</script>
