@@ -63,15 +63,15 @@ If a nondirectory file exists here, return an error code. The code 400 (“bad r
 
 methods.MKCOL = function(path, respond) {
   fs.stat(path, function(error, stats) {
-    
     if (error && error.code == "ENOENT") {
       fs.mkdir(path, respondErrorOrNothing(respond));
     } else if (error) {
       response(500, error.toString());
     } else if (stats.isDirectory()) {
       respond(204);
-    } 
-
+    } else {
+      respond(400, "File exists");
+    }
   });
 };
 
