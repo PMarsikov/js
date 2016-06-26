@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task40</title>
+</head>
+<body>
+	<div>
+	  <b>Choose file to edit: </b>
+	  <select id = "fileList" onchange = "loadCurrnetFile()"></select>
+	  <button onclick="editMode()" id = "editBtn">Edit</button>
+	  <button onclick="saveChanges()" id = "saveBtn">Save</button>
+	</div>
+	<textarea rows="20" cols="75" id = "textId"></textarea>
+	<script type="text/javascript" src="req.js"></script>
+</body>
+</html>
